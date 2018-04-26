@@ -137,6 +137,14 @@ After installing that package you will find
 instpubs.sql on the disk (C:\SQL Server 2000 Sample
 Databases). Execute that script to create pubs database.
 
+Tests and examples are using environment variable GOFREETDS_CONN_STR to connect to the pubs database.
+
+```shell
+export GOFREETDS_CONN_STR="user=ianic;pwd=ianic;database=pubs;host=iow"
+export GOFREETDS_MIRROR_HOST="iow-mirror"
+```
+If you don't want to setup and test database mirroring than don't define GOFREETDS_MIRROR_HOST. Mirroring tests will be skipped.
+
 If you don't want to do a full install, you can use a mssql docker instance to run your tests against as follows:
 ```shell
 docker pull microsoft/mssql-server-linux
@@ -145,10 +153,6 @@ docker container start gofreetds_mssql
 ```
 Then attach to the database and run the [pubs.sql](https://raw.githubusercontent.com/Microsoft/VCSamples/feeab9bc32c5c38b76b5b3f5dec15a376492a1ab/VC2008Samples/MFC/database/DBSampUtil/pubs.sql) script found in the Microsoft/VCSamples Github repo.
 
-Tests and examples are using environment variable GOFREETDS_CONN_STR to connect to the pubs database.
+To generate the Pubs database on older versions of Sybase, you may need to run [this](pubs.sybase_12_5.sql) script instead.
 
-```shell
-export GOFREETDS_CONN_STR="user=ianic;pwd=ianic;database=pubs;host=iow"
-export GOFREETDS_MIRROR_HOST="iow-mirror"
-```
-If you don't want to setup and test database mirroring than don't define GOFREETDS_MIRROR_HOST. Mirroring tests will be skipped.
+
