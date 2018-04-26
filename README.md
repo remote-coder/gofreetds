@@ -120,9 +120,11 @@ This mode uses TDS Version 5.
 ### Connection String Parameter
 
 You can set your connection string up for Sybase by using the 'compatibility_mode' Parameter. The parameter can be named 'compatibility', 'compatibility mode', 'compatibility_mode' or 'Compatibility Mode'. Currently this mode only supports Sybase. To specify you can use 'sybase' or 'Sybase'.
+If you are using an older version of Sybase ASE prior to 15, you should be able to use the Sybase 12.5 compatibility by specifying Sybase_12_5.
 
 ```
 Server=myServerAddress;Database=myDatabase;User Id=myUsername;Password=myPassword;Failover Partner=myMirror;Max Pool Size=200;Compatibility Mode=Sybase
+Server=myServerAddress;Database=myDatabase;User Id=myUsername;Password=myPassword;Failover Partner=myMirror;Max Pool Size=200;Compatibility Mode=Sybase_12_5
 ```
 
 
@@ -134,6 +136,14 @@ Pubs sample database install script could be [downloaded](http://www.microsoft.c
 After installing that package you will find
 instpubs.sql on the disk (C:\SQL Server 2000 Sample
 Databases). Execute that script to create pubs database.
+
+If you don't want to do a full install, you can use a mssql docker instance to run your tests against as follows:
+```shell
+docker pull microsoft/mssql-server-linux
+docker container create --name gofreetds_mssql -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=myPassword' -e 'MSSQL_PID=Express' -p 1433:1433  microsoft/mssql-server-linux:latest
+docker container start gofreetds_mssql
+```
+Then attach to the database and run the [pubs.sql](https://raw.githubusercontent.com/Microsoft/VCSamples/feeab9bc32c5c38b76b5b3f5dec15a376492a1ab/VC2008Samples/MFC/database/DBSampUtil/pubs.sql) script found in the Microsoft/VCSamples Github repo.
 
 Tests and examples are using environment variable GOFREETDS_CONN_STR to connect to the pubs database.
 
